@@ -11,7 +11,7 @@ data2=np.load('data.npy')
 
 genre_list=[]
 
-for i in tqdm(10):
+for i in tqdm(range(50)):
     song_data = data2[0][i]
     artist_data = data2[1][i]
     track_data = data2[12][i]
