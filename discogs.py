@@ -11,7 +11,7 @@ data2=np.load('data.npy')
 
 genre_list=[]
 
-for i in tqdm(range(50)):
+for i in tqdm(range(10000)):
     song_data = data2[0][i]
     artist_data = data2[1][i]
     track_data = data2[12][i]
@@ -21,7 +21,7 @@ for i in tqdm(range(50)):
     except IndexError:
         genre = []
     genre_list.append([track_data, genre])
-    time.sleep(0.5)
+    time.sleep(1)
 
 with open('discogs_genre_list.csv','w') as out:
     csv_out=csv.writer(out)

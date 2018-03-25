@@ -22,8 +22,8 @@ def get_all_titles(basedir,songNum,ext='.h5') :
 		files = glob.glob(os.path.join(root,'*'+ext))
 		for f in files:      #to do ..... convert to ints......
 			h5 = hdf5_getters.open_h5_file_read(f)
-			title[i] = str(hdf5_getters.get_title(h5).decode('utf-8'))
-			artist[i] = str(hdf5_getters.get_artist_name(h5).decode('utf-8'))
+			title[i] = str(hdf5_getters.get_title(h5))
+			artist[i] = str(hdf5_getters.get_artist_name(h5))
 			lat[i] = float(hdf5_getters.get_artist_latitude(h5))
 			lon[i] = float(hdf5_getters.get_artist_longitude(h5))
 			hot[i] = float(hdf5_getters.get_song_hotttnesss(h5))
@@ -34,8 +34,8 @@ def get_all_titles(basedir,songNum,ext='.h5') :
 			loudness[i] = float(hdf5_getters.get_loudness(h5))
 			tempo[i] = float(hdf5_getters.get_tempo(h5))
 			year[i] = float(hdf5_getters.get_year(h5))
-			track_ID[i] = str(hdf5_getters.get_track_id(h5).decode('utf-8'))
-            
+			track_ID[i] = str(hdf5_getters.get_track_id(h5))
+        		print(hdf5_getters.get_segments_timbre(h5))    
 			h5.close()
 			i += 1
 			if i % 1000 == 0:
