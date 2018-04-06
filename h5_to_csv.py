@@ -17,6 +17,9 @@ def get_all_titles(basedir,songNum,ext='.h5'):
 	loudness = [0]*songNum
 	tempo = [0]*songNum
 	year = [0]*songNum
+	timbre = [0]*songNum
+	time_sig = [0]*songNum
+	pitches = [0]*songNum
 	i = 0
 	for root, dirs, files in os.walk(basedir): #iterate over all the folders
 		files = glob.glob(os.path.join(root,'*'+ext))
@@ -48,17 +51,19 @@ def get_all_titles(basedir,songNum,ext='.h5'):
 				key[i] = 0
 			else:
 				key[i] = float(hdf5_getters.get_key(h5))
-			print(hdf5_getters.get_segments_timbre(h5))
 			duration[i] = float(hdf5_getters.get_duration(h5))
 			energy[i] = float(hdf5_getters.get_energy(h5))
 			loudness[i] = float(hdf5_getters.get_loudness(h5))
 			tempo[i] = float(hdf5_getters.get_tempo(h5))
 			year[i] = float(hdf5_getters.get_year(h5))
+			timbre[i] = hdf5_getters.get_segments_timbre(h5)
+			time_sig[i] = hdf5_getters.get_time_signature(h5)
+			pitches[i] = hdf5_getters.get_segments_pitches(h5)
 			h5.close()
 			i += 1
 			if i % 1000 == 0:
 				print(i)
-	return [title,artist,lat,lon,hot,dance,duration,energy,key,loudness,tempo,year]
+	return [title,artist,lat,lon,hot,dance,duration,energy,key,loudness,tempo,year,timbre,time_sig,pitches]
 
 
 def count_all_files(basedir,ext='.h5') :
@@ -82,7 +87,7 @@ d = os.path.join(cwd,'MillionSongSubset')
 #         break
 # f.close()
 
-columns = ['title','artist','lat','lon','hot','dance','duration','energy','key','loudness','tempo','year']
+columns = ['title','artist','lat','lon','hot','dance','duration','energy','key','loudness','tempo','year','timbre','time_sig','pitches']
 songNum = count_all_files(d)
 data = get_all_titles(d, songNum)
 df = pd.DataFrame(columns = columns)
@@ -98,7 +103,10 @@ df['key']=data[8]
 df['loudness']=data[9]
 df['tempo']=data[10]
 df['year']=data[11]
-df['genre']=data[12]
+df['timbre']=data[12]
+df['time_sig']=data[13]
+df['pitches']=data[14]
+
 print(df)
 df.to_csv('data2.csv',index=False)
 
