@@ -135,4 +135,4 @@ df['loud_time']=data[22]
 print(df)
 df.to_csv('data2.csv',index=False)
 
-print(str(len(data) + '= 23')   #check nothing has been missed
+print(str(len(data)) + '= 23')   #check nothing has been missed
