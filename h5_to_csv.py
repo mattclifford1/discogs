@@ -74,7 +74,8 @@ def count_all_files(basedir,ext='.h5') :
 	return cnt
 
 cwd = os.getcwd()
-d = os.path.join(cwd,'MillionSongSubset')
+# directory = os.path.join(cwd,'MillionSongSubset')
+directory = os.path.join(cwd,'MillionSongSubset/data')
 # directory = os.path.join(cwd,'MillionSongSubset')
 # tracks = os.path.join(directory,'AdditionalFiles/subset_unique_tracks.txt')
 # f = open(tracks,'r')
@@ -88,8 +89,8 @@ d = os.path.join(cwd,'MillionSongSubset')
 # f.close()
 
 columns = ['title','artist','lat','lon','hot','dance','duration','energy','key','loudness','tempo','year','timbre','time_sig','pitches']
-songNum = count_all_files(d)
-data = get_all_titles(d, songNum)
+songNum = count_all_files(directory)
+data = get_all_titles(directory, songNum)
 df = pd.DataFrame(columns = columns)
 df['title']=data[0]
 df['artist']=data[1]
