@@ -20,6 +20,14 @@ def get_all_titles(basedir,songNum,ext='.h5'):
 	timbre = [0]*songNum
 	time_sig = [0]*songNum
 	pitches = [0]*songNum
+	tatum = [0]*songNum
+	seg_loudness_max = [0]*songNum
+	beats = [0]*songNum
+	bars = [0]*songNum
+	sections = [0]*songNum
+	segments = [0]*songNum
+	loud_start = [0]*songNum
+	loud_time = [0]*songNum
 	i = 0
 	for root, dirs, files in os.walk(basedir): #iterate over all the folders
 		files = glob.glob(os.path.join(root,'*'+ext))
@@ -59,11 +67,19 @@ def get_all_titles(basedir,songNum,ext='.h5'):
 			timbre[i] = hdf5_getters.get_segments_timbre(h5)
 			time_sig[i] = hdf5_getters.get_time_signature(h5)
 			pitches[i] = hdf5_getters.get_segments_pitches(h5)
+			tatum[i] = hdf5_getters.get_tatums_start(h5)
+			seg_loudness_max[i] = hdf5_getters.get_segments_loudness_max(h5)
+			beats[i] = hdf5_getters.get_beats_start(h5)
+			bars[i] = hdf5_getters.get_bars_start(h5)
+			sections[i] = hdf5_getters.get_sections_start(h5)
+			segments[i] = hdf5_getters.get_segments_start(h5)
+			loud_start[i] = hdf5_getters.get_segments_loudness_start(h5)
+			loud_time[i] = hdf5_getters.get_segments_loudness_max_time(h5)
 			h5.close()
 			i += 1
 			if i % 1000 == 0:
 				print(i)
-	return [title,artist,lat,lon,hot,dance,duration,energy,key,loudness,tempo,year,timbre,time_sig,pitches]
+	return [title,artist,lat,lon,hot,dance,duration,energy,key,loudness,tempo,year,timbre,time_sig,pitches,tatum,seg_loudness_max,beats,bars,sections,segments,loud_start,loud_time]
 
 
 def count_all_files(basedir,ext='.h5') :
@@ -88,7 +104,7 @@ directory = os.path.join(cwd,'MillionSongSubset/data')
 #         break
 # f.close()
 
-columns = ['title','artist','lat','lon','hot','dance','duration','energy','key','loudness','tempo','year','timbre','time_sig','pitches']
+columns = ['title','artist','lat','lon','hot','dance','duration','energy','key','loudness','tempo','year','timbre','time_sig','pitches','tatum','seg_loudness_max','beats','bars','sections','segments','loud_start','loud_time']
 songNum = count_all_files(directory)
 data = get_all_titles(directory, songNum)
 df = pd.DataFrame(columns = columns)
@@ -107,7 +123,16 @@ df['year']=data[11]
 df['timbre']=data[12]
 df['time_sig']=data[13]
 df['pitches']=data[14]
+df['tatum']=data[15]
+df['seg_loudness_max']=data[16]
+df['beats']=data[17]
+df['bars']=data[18]
+df['sections']=data[19]
+df['segments']=data[20]
+df['loud_start']=data[21]
+df['loud_time']=data[22]
 
 print(df)
 df.to_csv('data2.csv',index=False)
 
+print(str(len(data) + '= 23')   #check nothing has been missed
