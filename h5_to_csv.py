@@ -28,6 +28,7 @@ def get_all_titles(basedir,songNum,ext='.h5'):
 	segments = [0]*songNum
 	loud_start = [0]*songNum
 	loud_time = [0]*songNum
+	track_id = [0]*songNum
 	i = 0
 	for root, dirs, files in os.walk(basedir): #iterate over all the folders
 		files = glob.glob(os.path.join(root,'*'+ext))
@@ -75,11 +76,12 @@ def get_all_titles(basedir,songNum,ext='.h5'):
 			segments[i] = hdf5_getters.get_segments_start(h5)
 			loud_start[i] = hdf5_getters.get_segments_loudness_start(h5)
 			loud_time[i] = hdf5_getters.get_segments_loudness_max_time(h5)
+			track_id[i] = str(hdf5_getters.get_track_id(h5))
 			h5.close()
 			i += 1
 			if i % 1000 == 0:
 				print(i)
-	return [title,artist,lat,lon,hot,dance,duration,energy,key,loudness,tempo,year,timbre,time_sig,pitches,tatum,seg_loudness_max,beats,bars,sections,segments,loud_start,loud_time]
+	return [title,artist,lat,lon,hot,dance,duration,energy,key,loudness,tempo,year,timbre,time_sig,pitches,tatum,seg_loudness_max,beats,bars,sections,segments,loud_start,loud_time,track_id]
 
 
 def count_all_files(basedir,ext='.h5') :
@@ -104,7 +106,7 @@ directory = os.path.join(cwd,'MillionSongSubset/data')
 #         break
 # f.close()
 
-columns = ['title','artist','lat','lon','hot','dance','duration','energy','key','loudness','tempo','year','timbre','time_sig','pitches','tatum','seg_loudness_max','beats','bars','sections','segments','loud_start','loud_time']
+columns = ['title','artist','lat','lon','hot','dance','duration','energy','key','loudness','tempo','year','timbre','time_sig','pitches','tatum','seg_loudness_max','beats','bars','sections','segments','loud_start','loud_time','track_id']
 songNum = count_all_files(directory)
 data = get_all_titles(directory, songNum)
 df = pd.DataFrame(columns = columns)
@@ -131,8 +133,9 @@ df['sections']=data[19]
 df['segments']=data[20]
 df['loud_start']=data[21]
 df['loud_time']=data[22]
+df['track_id']=data[23]
 
 print(df)
 df.to_csv('data2.csv',index=False)
 
-print(str(len(data)) + '= 23')   #check nothing has been missed
+# print(str(len(data)) + '= 24')   #check nothing has been missed
