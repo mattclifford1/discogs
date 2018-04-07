@@ -1,3 +1,6 @@
 /MillionSongSubset
 data2.csv
 data2.pkl
+data_with_lyrics_discogs.pkl
+discogs_genre_convert.pkl
+lyrics_genre_overlap.pkl
