@@ -136,6 +136,7 @@ df['loud_time']=data[22]
 df['track_id']=data[23]
 
 print(df)
-df.to_csv('data2.csv',index=False)
+# df.to_csv('data2.csv',index=False)
+df.to_pickle('data2.pkl')
 
 # print(str(len(data)) + '= 24')   #check nothing has been missed
