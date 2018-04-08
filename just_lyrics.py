@@ -9,5 +9,5 @@ for i in tqdm(range(len(data))):
 
 print(data)
 
-data.to_pickle('lyrics_genre_overlap.pkl')
+data.to_pickle('lyrics_genre_overlap2.pkl', protocol=2)
 
