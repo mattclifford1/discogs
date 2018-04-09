@@ -2,36 +2,54 @@ from sklearn import svm
 import numpy as np
 import pickle
 
-features = np.load('features.npy')
+def split_data(it, part, features, labels):  #split train and test cycles
+	feature = list(np.copy(features))  #for dumb python pointers, why would that be a feature lol?
+	label = list(np.copy(labels))
+
+	lower = int((it*len(label))/part)
+	upper = int(((it+1)*len(label))/part)
+
+	features_test = feature[lower:upper]
+	labels_test = label[lower:upper]
+
+	feature[lower:upper] = []   #train
+	label[lower:upper] = []     #train
+
+	return feature, label, features_test, labels_test
+
+#load labels data
+features = list(np.load('features.npy'))
 labels = pickle.load(open('lyrics_genres.pkl', 'rb'))
 
+#find labels
 unique = list(set(labels))
 
+#dictionary for int to string label
 int_labels = [0]*len(labels)
 
+#assign string label to interger equivelant
 for i in range(len(labels)):
-	int_labels[i] = unique.index(labels[i])  #assign string label to interger equivelant
+	int_labels[i] = unique.index(labels[i])  
 
-#split into test and train
-lim = int(4*len(labels)/5)
-train_features = features[:lim]
-test_features = features[lim:]
+#cross validation showing correct classification (hard)
+partitions = 10
+for i in range(partitions):
+	#get test/train partition from current cycle
+	features_train, labels_train, features_test, labels_test = split_data(i, partitions, features, labels)
+	
+	clf = svm.SVC()       #define classifier
+	clf.fit(features_train, labels_train)    #fit classifier to features
 
-train_labels = int_labels[:lim]
-test_labels = int_labels[lim:]
+	#determine classification success
+	correct = 0 
+	incorrect = 0
+	for i in range(len(labels_test)):
+		prediction = clf.predict([features_test[i]]) #predict one test point from classifier
+		if prediction == labels_test[i]:     #test if correct
+			correct += 1
+		else:
+			incorrect +=1
 
-clf = svm.SVC()
-clf.fit(train_features, train_labels) 
-
-correct = 0 
-incorrect = 0
-for i in range(len(test_labels)):
-	prediction = clf.predict([test_features[i]])
-	if prediction == test_labels[i]:
-		correct += 1
-	else:
-		incorrect +=1
-
-print(str(correct) + ' correct')
-print(str(incorrect) + ' incorrect')
-print(str((correct/(incorrect+correct))*100) + '\%' + ' success')
+	# print(str(correct) + ' correct')
+	# print(str(incorrect) + ' incorrect')
+	print(str(int((correct/(incorrect+correct))*100)) + '%' + ' success')
