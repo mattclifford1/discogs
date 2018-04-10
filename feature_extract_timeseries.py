@@ -11,7 +11,7 @@ if removed_missing == False:
 			data = data.drop(i)
 	data.to_pickle('data_only_genre.pkl')
 
-sort_time_series = False
+sort_time_series = True
 if sort_time_series == False:
 	#load data with missing genres removed
 	data = pd.read_pickle('data_only_genre.pkl')
