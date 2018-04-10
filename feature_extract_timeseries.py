@@ -33,8 +33,8 @@ if sort_time_series == False:
 		for dim in range(dims):  #12 is dim of timbre
 			flat_features = []
 			ids = []
-			# for i in tqdm(range(len(current_feature))):
-			for i in tqdm(range(10)):
+			for i in tqdm(range(len(current_feature))):
+			# for i in tqdm(range(10)):
 				current_song = current_feature[i]
 				flat_features += list(current_song[:,dim])
 				ids += [i]*len(current_song)
@@ -45,8 +45,17 @@ if sort_time_series == False:
 
 time_series = pd.read_pickle('time_series.pkl')
 classes = pd.read_pickle('classes.pkl')
+
+import multiprocessing
+num_cores = multiprocessing.cpu_count()
+
+# from tsfresh.utilities.distribution import MultiprocessingDistributor
+# Distributor = MultiprocessingDistributor(n_workers=num_cores, disable_progressbar=False, progressbar_title="Feature Extraction")
+
 from tsfresh import extract_features
-extracted_features = extract_features(time_series, column_id="id")
+extracted_features = extract_features(time_series, column_id="id",n_jobs=num_cores)
+#use this one below for parrellel processing
+# extracted_features = extract_features(timeseries_container=time_series,column_id='id',distributor=Distributor)
 import pickle
 pickle.dump(extracted_features, open('extracted_features.pkl', 'wb'))
 # extracted_features = pickle.load(open('extracted_features.pkl', 'rb')
