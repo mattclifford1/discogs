@@ -53,8 +53,8 @@ num_cores = multiprocessing.cpu_count()
 # Distributor = MultiprocessingDistributor(n_workers=num_cores, disable_progressbar=False, progressbar_title="Feature Extraction")
 
 # from tsfresh import extract_features
-from tsfresh.feature_extraction import extract_features, MinimalFCParameters
-extracted_features = extract_features(time_series, column_id="id",n_jobs=num_cores, default_fc_parameters=MinimalFCParameters())
+from tsfresh.feature_extraction import extract_features, MinimalFCParameters, EfficientFCParameters
+extracted_features = extract_features(time_series, column_id="id",n_jobs=num_cores, default_fc_parameters=EfficientFCParameters())
 #use this one below for parrellel processing
 # extracted_features = extract_features(timeseries_container=time_series,column_id='id',distributor=Distributor)
 import pickle

@@ -64,8 +64,8 @@ labels = pickle.load(open('classes.pkl', 'rb')).tolist()
 features = features.values.tolist()
 
 #find labels
-unique2 = list(set(labels))
-print(unique==unique2)
+unique = list(set(labels))
+
 #dictionary for int to string label
 int_labels = [0]*len(labels)
 
