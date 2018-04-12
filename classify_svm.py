@@ -74,12 +74,12 @@ partitions = 4    #cycles of cross validation
 # comb_data = comb_data.values.tolist()
 # train_classify(comb_data, labels, partitions)
 
-print('---------timbre data-----------')
-#load labeled data for basic timbre features
-features3 = pickle.load(open('filtered_features.pkl', 'rb'), encoding='latin1')
-# features3 = features.values.tolist()   #turn pandas df to 2d array
-labels3 = pickle.load(open('classes.pkl', 'rb')).tolist()
-#train and test classifer
-train_classify(features3, labels3, partitions)
+# print('---------timbre data-----------')
+# #load labeled data for basic timbre features
+# features3 = pickle.load(open('filtered_features.pkl', 'rb'), encoding='latin1')
+# # features3 = features.values.tolist()   #turn pandas df to 2d array
+# labels3 = pickle.load(open('classes.pkl', 'rb')).tolist()
+# #train and test classifer
+# train_classify(features3, labels3, partitions)
 
 
