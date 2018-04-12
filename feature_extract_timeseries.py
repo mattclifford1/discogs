@@ -30,7 +30,8 @@ if sort_time_series == False:
 	for feat in features:
 		current_feature = data[feat].tolist()
 		dims = current_feature[0].shape[1]
-		for dim in range(dims):  #12 is dim of timbre
+		for dim in range(1):  #12 is dim of timbre
+		# for dim in range(dims):  #12 is dim of timbre
 			flat_features = []
 			ids = []
 			for i in tqdm(range(len(current_feature))):
@@ -41,9 +42,9 @@ if sort_time_series == False:
 			time_series[str(dim)] = flat_features
 		time_series['id'] = ids
 
-	time_series.to_pickle('time_series.pkl', protocol=2)  #for python 2
+	time_series.to_pickle('time_series_1.pkl', protocol=2)  #for python 2
 
-time_series = pd.read_pickle('time_series.pkl')
+time_series = pd.read_pickle('time_series_1.pkl')
 classes = pd.read_pickle('classes.pkl')
 
 import multiprocessing

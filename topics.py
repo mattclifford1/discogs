@@ -56,7 +56,9 @@ for i in range(len(list_of_lyrics)):
 		topic = probs[j][0]    #find topic number from index
 		features[i][topic] = probs[j][1]   #assign probability of that topic
 np.save('features.npy',features)
-print(features)
+df = pd.DataFrame(features,index=indicies)
+df.to_pickle('topics_features_df.pkl')
+
 
 
 
