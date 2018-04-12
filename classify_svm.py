@@ -54,29 +54,29 @@ def train_classify(features, labels, partitions):  #need to both be lists, featu
 
 ###### train and classify different data 
 partitions = 4    #cycles of cross validation
-print('---------bag of words----------')
-features_df = pd.read_pickle('just_bag_of_words.pkl')
-features = features_df.values.tolist()
-labels = pickle.load(open('lyrics_genres.pkl', 'rb'))  #same for both lyrics sets
-train_classify(features, labels, partitions)
+# print('---------bag of words----------')
+# features_df = pd.read_pickle('just_bag_of_words.pkl')
+# features = features_df.values.tolist()
+# labels = pickle.load(open('lyrics_genres.pkl', 'rb'))  #same for both lyrics sets
+# train_classify(features, labels, partitions)
 
-print('---------topic model-----------')
-#load labeled data for lyric topics
-features2 = list(np.load('features.npy'))
-#train and test classifer
-train_classify(features2, labels, partitions)
+# print('---------topic model-----------')
+# #load labeled data for lyric topics
+# features2 = list(np.load('features.npy'))
+# #train and test classifer
+# train_classify(features2, labels, partitions)
 
 
-print('--------combined lyrics--------')
+# print('--------combined lyrics--------')
 
-df = pd.read_pickle('topics_features_df.pkl')
-comb_data = pd.concat([features_df, df], axis=1)
-comb_data = comb_data.values.tolist()
-train_classify(comb_data, labels, partitions)
+# df = pd.read_pickle('topics_features_df.pkl')
+# comb_data = pd.concat([features_df, df], axis=1)
+# comb_data = comb_data.values.tolist()
+# train_classify(comb_data, labels, partitions)
 
 print('---------timbre data-----------')
 #load labeled data for basic timbre features
-features3 = pickle.load(open('filtered_features.pkl', 'rb'))
+features3 = pickle.load(open('filtered_features.pkl', 'rb'), encoding='latin1')
 # features3 = features.values.tolist()   #turn pandas df to 2d array
 labels3 = pickle.load(open('classes.pkl', 'rb')).tolist()
 #train and test classifer
