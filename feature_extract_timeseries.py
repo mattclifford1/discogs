@@ -11,7 +11,7 @@ if removed_missing == False:
 			data = data.drop(i)
 	data.to_pickle('data_only_genre.pkl')
 
-sort_time_series = True
+sort_time_series = False
 if sort_time_series == False:
 	#load data with missing genres removed
 	data = pd.read_pickle('data_only_genre.pkl')
@@ -30,8 +30,8 @@ if sort_time_series == False:
 	for feat in features:
 		current_feature = data[feat].tolist()
 		dims = current_feature[0].shape[1]
-		for dim in range(1):  #12 is dim of timbre
-		# for dim in range(dims):  #12 is dim of timbre
+		# for dim in range(1):  #12 is dim of timbre
+		for dim in range(dims):  #12 is dim of timbre
 			flat_features = []
 			ids = []
 			for i in tqdm(range(len(current_feature))):
