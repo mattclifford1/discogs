@@ -1,0 +1,9 @@
+path of getting clean and even data:
+
+
+genre_add.py :  read 		data_only_genre.pkl
+		convert to	even_data_with_lyrics_discogs.pkl   #even whole dataframe
+
+just_lyrics.py  read 		even_data_with_lyrics_discogs.pkl
+		convert to 	even_lyrics_genre_overlap.pkl       #just lyrics and genre
+
